@@ -22,6 +22,103 @@ public class BinaryTree {
         }
     }
 
+// INFO MINIMUM BY ITERATION
+    public int min() {
+        if (root == null)
+            throw new IllegalStateException("Cannot find minimum value of an empty tree");
+        Node current = root;
+        int lastValue = current.getValue();
+
+        while (current != null) {
+            lastValue = current.getValue();
+            current = current.left;
+        }
+
+        return lastValue;
+    }
+
+// INFO MINIMUM BY RECURSION
+//    public int min() {
+//        if (root == null)
+//            throw new IllegalStateException("Cannot find minimum value of an empty tree");
+//        return min(root);
+//    }
+
+    private int min(Node root) {
+        if (isLeaf(root))
+            return root.getValue();
+
+        if (root.left == null || root.right == null)
+            return root.getValue();
+
+//        INFO POSTORDER TRAVERSAL
+//        INFO LEFT
+        int leftValue = min(root.left);
+//        INFO RIGHT
+        int rightValue = min(root.right);
+
+//        INFO ROOTa
+//        INFO MAX OF LEFT, RIGHT AND ROOT
+        return Math.min(Math.min(leftValue, rightValue), root.value);
+    }
+
+    public boolean isLeaf(Node root) {
+        return root.left == null && root.right == null;
+    }
+
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node root) {
+        if (root == null)
+            return -1;
+
+        if (root.left == null && root.right == null)
+            return 0;
+
+        return 1 + Math.max(height(root.left), height(root.right));
+    }
+
+    public void inOrderTraversal() {
+        inOrderTraversal(root);
+    }
+
+    private void inOrderTraversal(Node root) {
+        if (root == null)
+            return;
+
+        inOrderTraversal(root.left);
+        System.out.println("[inOrderTraversal][value] " + root.value);
+        inOrderTraversal(root.right);
+    }
+
+    public void postOrderTraversal() {
+        postOrderTraversal(root);
+    }
+
+    private void postOrderTraversal(Node root) {
+        if (root == null)
+            return;
+
+        postOrderTraversal(root.left);
+        postOrderTraversal(root.right);
+        System.out.println("[postOrderTraversal][value] " + root.value);
+    }
+
+    public void preOrderTraversal() {
+        preOrderTraversal(root);
+    }
+
+    private void preOrderTraversal(Node root) {
+        if (root == null)
+            return;
+
+        System.out.println("[preOrderTraversal][value] " + root.value);
+        preOrderTraversal(root.left);
+        preOrderTraversal(root.right);
+    }
+
     public void levelOrderTraversal() {
         if (root == null)
             return;
@@ -37,10 +134,7 @@ public class BinaryTree {
 
         Node current = queue.remove(0);
 
-        if (current == null)
-            return;
-
-        System.out.println("current: " + current.getValue());
+        System.out.println("[levelOrderTraversal] " + current.getValue());
 
         if (current.left != null)
             queue.add(current.left);
