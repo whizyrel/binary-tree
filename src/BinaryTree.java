@@ -22,6 +22,30 @@ public class BinaryTree {
         }
     }
 
+    public boolean equals(BinaryTree other) {
+        if(other == null)
+            return false;
+
+        return equals(root, other.root);
+    }
+
+    private boolean equals(Node first, Node second) {
+//        INFO both are null
+        if (first == null && second == null)
+            return true;
+
+        if (first != null && second != null)
+//            INFO Visit root
+            return first.value == second.value
+//                    INFO Visit left
+                && equals(first.left, second.left)
+//                     INFO Visit right
+                && equals(first.right, second.right);
+
+//            INFO any one of both is null
+        return false;
+    }
+
 // INFO MINIMUM BY ITERATION
     public int min() {
         if (root == null)

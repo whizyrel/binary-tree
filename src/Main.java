@@ -28,5 +28,9 @@ public class Main {
         System.out.println("height of root: " + tree.height());
         System.out.println("===== Minimum value in a tree =====");
         System.out.println("Minimum value in a tree: " + tree.min());
+        System.out.println("===== Equality of two trees =====");
+        BinaryTree otherTree = new BinaryTree();
+        valueList.forEach(otherTree::insert);
+        System.out.println("Are these trees equal: " + tree.equals(otherTree));
     }
 }
